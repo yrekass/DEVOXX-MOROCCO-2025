@@ -1,0 +1,13 @@
+Bonjour tout le monde
+Aujourd'hui je voulais vous faire découvrir comment amélirer la documentation technique et surtout embarquer l'équipe technique
+notament les dev dans ce processus
+Aujourd’hui, on fait face à un vrai problème de documentation.
+Nos infos sont éparpillées entre Confluence, wiki et les README dans Git
+Résultat : c’est difficile de s’y retrouver, surtout pour les développeurs.
+
+On observe une dérive entre le code et la documentation — le code évolue, mais la doc ne suit pas toujours.
+Ça crée des incompréhensions, de la perte de temps et parfois des erreurs évitables.
+
+L’enjeu, c’est de centraliser, synchroniser et rendre la doc vivante, pour qu’elle devienne un vrai outil au service des devs — pas une contrainte.
+
+d'où les outilsation d'un outils comme backstage et techdocs

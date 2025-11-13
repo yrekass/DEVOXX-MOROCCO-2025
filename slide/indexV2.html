@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backstage + TechDocs — Présentation complète</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: linear-gradient(180deg, #0f1720 0%, #1c1f2b 100%);
+      --fg: #ffffff;
+      --accent: #1DB954;
+      --accent-2: #2bb673;
+      --muted: rgba(255,255,255,0.05);
+      --card-bg: rgba(255,255,255,0.07);
+      --code-bg: #0f1720;
+      --shadow: 0 6px 20px rgba(0,0,0,0.3);
+      --muted-text: #cfd8dc;
+      --breadcrumb: rgba(255,255,255,0.1);
+    }
+
+    body, .reveal { background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+    .reveal .slides { padding: 40px 60px; background-image: url('https://www.transparenttextures.com/patterns/graphy.png'); background-repeat: repeat; }
+    h1,h2,h3{margin:0;color:var(--fg);font-weight:600}
+    p, li { color: var(--muted-text); line-height:1.5 }
+
+    .logo-circle { width:72px;height:72px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;box-shadow:var(--shadow); }
+    .card { background:var(--card-bg); border-radius:12px; padding:18px; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.1); margin-bottom:20px; }
+    .small{ font-size:0.92rem; color:var(--muted-text) }
+    .center{ display:flex; align-items:center; justify-content:center }
+    .two-col{ display:flex; gap:24px }
+    .col{ flex:1 }
+
+    .cta{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; padding:10px 14px; border-radius:10px; font-weight:600; display:inline-block }
+    .breadcrumb{ background:var(--breadcrumb); padding:6px 10px; border-radius:8px; font-size:0.85rem; color:var(--muted-text); display:inline-block; margin-bottom:12px }
+    .intro-photo { width:120px; height:120px; border-radius:50%; object-fit:cover; border:4px solid var(--accent); }
+
+    table{ width:100%; border-collapse:collapse; margin-top:8px }
+    th,td{ padding:10px; border-bottom:1px solid rgba(255,255,255,0.15); text-align:left }
+    th{ background: rgba(255,255,255,0.05) }
+
+    .reveal .slides section{ transition:transform 420ms ease, opacity 420ms ease }
+    .fragment { opacity:0; transform: translateY(6px); transition: opacity 260ms ease, transform 260ms ease }
+    .fragment.visible { opacity:1; transform: translateY(0) }
+
+    @media (max-width:900px){ .two-col{ flex-direction:column } .reveal .slides { padding: 30px } }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- Slide d’intro -->
+<section>
+  <div class="two-col" style="align-items:center; gap:32px; margin-bottom:24px">
+    <div class="col center" style="flex-direction:column; gap:14px">
+      <img src="https://via.placeholder.com/120" alt="Photo" class="intro-photo"/>
+      <h3 style="margin:0">Ton Nom</h3>
+      <p class="small" style="margin:0;color:#ccc">Titre / Rôle<br>Entreprise</p>
+    </div>
+    <div class="col">
+      <div class="logo-circle">BT</div>
+      <h1>Backstage + TechDocs</h1>
+      <p class="small">Rendre la documentation naturelle — intégrée au quotidien des équipes</p>
+      <div class="breadcrumb">Docs · Backstage · TechDocs</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide Problème -->
+<section>
+  <h2>Problème</h2>
+  <div class="card">
+    <ul>
+      <li class="fragment">Docs éparpillées (Confluence, Notion, GitHub, Google Doc...)</li>
+      <li class="fragment">Souvent obsolètes ou difficiles à trouver</li>
+      <li class="fragment">Les devs n’aiment pas quitter leur workflow</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Slide Idée clé -->
+<section>
+  <h2>Idée clé</h2>
+  <p class="small">Et si la documentation était produite <strong>là où le code vit</strong> — dans Git, via des PR, visible dans le portail développeur ?</p>
+  <div class="center"><span class="cta fragment">Docs as Code → adoption naturelle</span></div>
+</section>
+
+<!-- Slide Backstage -->
+<section>
+  <h2>Backstage (en 1 minute)</h2>
+  <div class="two-col">
+    <div class="col">
+      <ul>
+        <li class="fragment">Portail développeur open source (Spotify)</li>
+        <li class="fragment">Catalogue des services / composants</li>
+        <li class="fragment">Intégration d'outils & plugins</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card small">
+        <strong>Pourquoi ?</strong>
+        <p>Centraliser l'expérience dev : observabilité, docs, CI, templates — tout accessible au même endroit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide TechDocs -->
+<section>
+  <h2>TechDocs — le plugin Docs-as-Code</h2>
+  <div class="card">
+    <ul>
+      <li class="fragment">Rend les docs Markdown visibles dans Backstage</li>
+      <li class="fragment">Stock dans Git, versionné via PR</li>
+      <li class="fragment">Génération statique (MkDocs) + hébergement via Backstage</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Slide Avant vs Après -->
+<section>
+  <h2>Avant vs Après</h2>
+  <table>
+    <tr><th>Avant</th><th>Après (TechDocs)</th></tr>
+    <tr><td>Docs éparpillées</td><td>Docs centralisées dans Backstage</td></tr>
+    <tr><td>Pas de versioning</td><td>Git + PR + CI</td></tr>
+    <tr><td>Mise à jour manuelle</td><td>Éditable depuis repo — pipeline build</td></tr>
+  </table>
+</section>
+
+<!-- Slide Vue des devs -->
+<section>
+  <h2>Ce que voient les devs</h2>
+  <div class="two-col">
+    <div class="col card">
+      <strong>Dans Backstage :</strong>
+      <ul>
+        <li>Onglet Docs sur chaque composant</li>
+        <li>Recherche globale</li>
+        <li>Liens vers sources</li>
+      </ul>
+    </div>
+    <div class="col">
+      <img src="https://backstage.io/img/backstage.png" alt="Backstage UI" style="max-width:100%;border-radius:10px">
+    </div>
+  </div>
+</section>
+
+<!-- Slide Démo -->
+<section>
+  <h2>Démo — scénario (slides)</h2>
+  <ol>
+    <li>Ouvrir Backstage → sélectionner un composant</li>
+    <li>Afficher l'onglet Docs</li>
+    <li>Montrer le repo source (docs/index.md)</li>
+    <li>Faire une modif rapide en PR → merge → voir le rendu</li>
+  </ol>
+  <p class="small">(Garder la démo courte : 6–8 minutes max)</p>
+</section>
+
+<!-- Slide Arguments -->
+<section>
+  <h2>Arguments pour convaincre</h2>
+  <ul>
+    <li>Adoption : les devs restent dans Git/Backstage</li>
+    <li>Qualité : review + versioning</li>
+    <li>Découverte : recherche centralisée</li>
+  </ul>
+</section>
+
+<!-- Slide Plan adoption -->
+<section>
+  <h2>Plan d'adoption en 4 étapes</h2>
+  <ol>
+    <li>Choisir 1 équipe pilote</li>
+    <li>Migrer 1 repo de doc vers <code>docs/</code> en Markdown</li>
+    <li>Configurer TechDocs + CI (build MkDocs)</li>
+    <li>Mesurer usage & itérer</li>
+  </ol>
+</section>
+
+<!-- Slide Bonnes pratiques -->
+<section>
+  <h2>Bonnes pratiques</h2>
+  <ul>
+    <li>Faire d'une PR de features une PR de docs</li>
+    <li>Templates de pages (onboarding, runbooks, archi)</li>
+    <li>Tags / metadata dans catalog-info.yaml</li>
+  </ul>
+</section>
+
+<!-- Slide Risques -->
+<section>
+  <h2>Risques & solutions</h2>
+  <ul>
+    <li>"Trop de docs" → indexation + search</li>
+    <li>Obsolescence → règles PR + ownership</li>
+    <li>Mauvaise qualité → templates & linting Markdown</li>
+  </ul>
+</section>
+
+<!-- Slide Ressources -->
+<section>
+  <h2>Ressources</h2>
+  <ul>
+    <li>backstage.io</li>
+    <li>Docs TechDocs (MkDocs, mkdocs-material)</li>
+    <li>Exemples de catalog-info.yaml</li>
+  </ul>
+</section>
+
+<!-- Slide Conclusion -->
+<section>
+  <h2>Conclusion & CTA</h2>
+  <p class="small">Intégrer la doc au workflow = la rendre durable. Testez TechDocs sur un repo en 1 heure pour un POC.</p>
+  <div class="center"><span class="cta">Commencez par un PoC !</span></div>
+</section>
+
+<!-- Slide Q&A -->
+<section>
+  <h2>Q&A</h2>
+  <p class="small">Questions ? Remarques ? Besoin d’un template de repo ?</p>
+</section>
+
+</div>
+</div>
+
+<script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    center: true,
+    transition: 'slide',
+    slideNumber: true
+  });
+</script>
+</body>
+</html>

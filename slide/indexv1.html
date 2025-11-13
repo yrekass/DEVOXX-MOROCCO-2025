@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centraliser la documentation avec Backstage TechDocs</title>
+
+  <!-- Google Font Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/theme/black.css" id="theme">
+
+  <style>
+    body, .reveal {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #fbfafa;
+      color: #161616;
+      overflow: hidden;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal p, .reveal li {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-weight: 700;
+      color: #18645b;
+      text-transform: uppercase;
+      text-shadow: 0 0 5px rgba(0,255,224,0.6);
+    }
+
+    .reveal pre.code {
+      background: #1a1a1a;
+      color: #18645b;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+
+    .reveal ul li, .reveal ol li {
+      margin-bottom: 0.6rem;
+    }
+
+    .reveal a {
+      color: #18645b;
+      text-decoration: underline;
+    }
+    .reveal a:hover {
+      color: #ff00ff;
+    }
+    .intro-photo { width:120px; height:120px; border-radius:50%; object-fit:cover; border:4px solid var(--accent); }
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+	
+    <div class="slides">
+      <section>
+        <h3>
+          Backstage & TechDocs : </h3>
+          <p class="small" style="margin:0;color:#f9f8f8">vers une documentation vivante et utile</p>
+          <hr>
+        <div class="col center" style="flex-direction:column; gap:14px">
+                    <img src="1759592817387.jpeg" alt="Photo" class="intro-photo"/>
+                    <h3 style="margin:0">Youness REKASS</h3>
+                    <p class="small" style="margin:0;color:#ccc">Tech Lead/Développeur</p>
+                    
+               </div>
+        <table>
+          <tr>
+             <td></td>
+            <td>
+               
+            </td>
+            <td>
+             
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      
+	 <!-- <section data-markdown="slides/intro.md">
+	  </section>
+      --> 
+
+      <section>
+        <h2>Problématique</h2>
+        <ul>
+          <li>Documentation dispersée (Confluence, Notion, README Git)</li>
+          <li>Dérive entre code et docs</li>
+          <li>Difficulté d'accès pour les devs</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Qu'est-ce que Backstage ?</h2>
+        <p>Plateforme de developer experience pour gérer services, catalogues et docs.</p>
+      </section>
+
+      <section>
+        <h2>TechDocs — vue d'ensemble</h2>
+        <ul>
+          <li>Plugin officiel Backstage</li>
+          <li>Génère une documentation statique à partir de Markdown (MkDocs)</li>
+          <li>Docs versionnées dans le repo du composant</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Architecture (schéma)</h2>
+        <p class="code">Repo Git &rarr; MkDocs (docs/) &rarr; CI/CD &rarr; Storage (S3/GCS) &rarr; Backstage TechDocs Backend &rarr; UI</p>
+      </section>
+
+      <section>
+        <h2>Étapes d'intégration — résumé</h2>
+        <ol>
+          <li>Ajouter <code>mkdocs.yml</code></li>
+          <li>Ajouter <code>docs/</code> (Markdown)</li>
+          <li>Ajouter annotation TechDocs dans <code>catalog-info.yaml</code></li>
+          <li>Configurer backend TechDocs (<code>app-config.yaml</code>)</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Démo — Scénario rapide (6 min)</h2>
+        <p>Objectif : montrer de l'import d'un composant -> visualiser TechDocs dans Backstage -> modifier et re-générer</p>
+      </section>
+
+      <section>
+        <h3>Fichiers-clés (exemples)</h3>
+        <pre class="code"># mkdocs.yml
+site_name: Mon Service
+nav:
+  - Accueil: index.md
+  - API: api.md
+
+# catalog-info.yaml (extrait)
+metadata:
+  name: mon-service
+  annotations:
+    backstage.io/techdocs-ref: dir:./docs</pre>
+      </section>
+
+      <section>
+        <h3>Commandes utiles (CI & local)</h3>
+        <pre class="code"># Exemple local / git
+git clone git@github.com:org/mon-service.git
+cd mon-service
+# éditer docs/index.md
+git add docs/index.md
+git commit -m "Ajout intro TechDocs"
+git push
+
+# Si vous utilisez Backstage local
+cd backstage
+yarn dev
+
+# Extrait CI (pseudo)
+- name: Build TechDocs
+  run: mkdocs build -d site
+- name: Upload to S3
+  run: aws s3 sync site/ s3://bucket/mon-service/</pre>
+      </section>
+
+      <section>
+        <h2>Bénéfices & bonnes pratiques</h2>
+        <ul>
+          <li>Docs versionnées avec le code</li>
+          <li>Visibilité centralisée pour les équipes</li>
+          <li>Automatisation via CI/CD</li>
+          <li>Templates MkDocs partagés et revue PR pour docs</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Timing de la présentation</h2>
+        <p>Intro 3' — TechDocs 5' — Setup 5' — Démo 6' — Bénéfices 1' — Q&A 2'</p>
+      </section>
+
+      <section>
+        <h2>Questions & Ressources</h2>
+        <ul>
+          <li>Docs Backstage: backstage.io</li>
+          <li>Exemple MkDocs: mkdocs.org</li>
+          <li>Templates et CI : snippets fournis dans le repo de l'équipe</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+  <script>
+    Reveal.initialize({
+      center: true,
+      hash: true,
+      slideNumber: true,
+	  plugins: [ RevealMarkdown ]
+    });
+  </script>
+</body>
+</html>
